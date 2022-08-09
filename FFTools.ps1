@@ -1,4 +1,4 @@
-Write-Host 'This tool require administrator right, please press Y to start the tool correctly'
+# This tool require administrator right, please allow it to start the tool correctly
 
 if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator"))  
 {  
