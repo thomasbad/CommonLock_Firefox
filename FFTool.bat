@@ -1,8 +1,40 @@
 ECHO OFF
 CLS
+Title Firefox Common Lock Tool
+Color 17
+
+:MENU
+
+ECHO ...............................................
+ECHO PRESS 1 to enable the lock, 2 to disable it, or 0 to EXIT.
+ECHO Please ensure the tool is run as admin to work.
+ECHO ...............................................
+ECHO .
+ECHO 1 - Enable locking Firefox policy
+ECHO 2 - Disable locking Firefox policy
+ECHO 0 - Exit the tool
+ECHO.
+SET INPUT=
+SET /P INPUT=Please select a number then press ENTER:
+IF /I '%INPUT%'=='1' GOTO ENFF
+IF /I '%INPUT%'=='2' GOTO DISFF
+IF /I '%INPUT%'=='0' GOTO QUIT
+
+ECHO ============INVALID INPUT============
+ECHO -------------------------------------
+ECHO Please select a number from the Main
+echo Menu [1 or 2], or select '0' to quit.
+ECHO -------------------------------------
+ECHO ======PRESS ANY KEY TO CONTINUE======
+
+PAUSE > NUL
+GOTO MENU
+
+:ENFF
+CLS
 reg delete "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Mozilla" /F
 ::reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Mozilla\Firefox\Extensions\Locked" /V 1 /T REG_SZ /F /D "ApplicationGuardRel@microsoft.com"
-::Remove the comment above if Application Guard have been use here
+::Remove the above comment if ApplicationGuard have been used
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Mozilla\Firefox" /V BlockAboutConfig /T REG_DWORD /F /D 1
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Mozilla\Firefox" /V BlockAboutAddons /T REG_DWORD /F /D 1
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Mozilla\Firefox" /V BlockAboutProfiles /T REG_DWORD /F /D 1
@@ -24,3 +56,19 @@ ECHO -----------------------------------------------
 ECHO ===========PRESS ANY KEY TO CONTINUE===========
 pause > NUL
 cls
+GOTO QUIT
+
+:DISFF
+CLS
+reg delete "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Mozilla" /F
+ECHO ===================COMPLETED===================
+ECHO -----------------------------------------------
+ECHO Disabled locking Firefox
+ECHO -----------------------------------------------
+ECHO ===========PRESS ANY KEY TO CONTINUE===========
+pause > NUL
+cls
+GOTO QUIT
+
+:QUIT
+EXIT
